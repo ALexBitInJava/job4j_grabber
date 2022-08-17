@@ -31,11 +31,13 @@ public class AlertRabbit {
         }
     }
 
-    public static int getRabbitInterval() throws IOException {
+    public static int getRabbitInterval() {
         try (InputStream is = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
             Properties properties = new Properties();
             properties.load(is);
             return Integer.parseInt(properties.getProperty("rabbit.interval"));
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 

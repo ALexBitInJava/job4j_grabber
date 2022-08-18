@@ -51,8 +51,7 @@ public class HabrCareerParse {
             String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
             String dateTime = String.format(linkDateTime.attr("datetime"));
             String[] dF = dateTime.split("T");
-            DateTimeFormatter dTF = DateTimeFormatter.ofPattern("yy-mm-dd");
-            System.out.printf("%s %s %s%n", String.format(dF[0], dTF), vacancyName, link);
+            System.out.printf("%s %s %s%n", dF[0], vacancyName, link);
         });
     }
 }

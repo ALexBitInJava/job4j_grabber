@@ -15,32 +15,28 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
     public static void main(String[] args) {
-        try {
-            Properties config = getProperties();
-            try (Connection connection = getConnectionWithProperties(config)) {
-                Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-                scheduler.start();
-                JobDataMap data = new JobDataMap();
-                data.put("connection", connection);
-                JobDetail job = newJob(Rabbit.class)
-                        .usingJobData(data)
-                        .build();
-                SimpleScheduleBuilder times = simpleSchedule()
-                        .withIntervalInSeconds(Integer.parseInt(
-                                config.getProperty("rabbit.interval")))
-                        .repeatForever();
-                Trigger trigger = newTrigger()
-                        .startNow()
-                        .withSchedule(times)
-                        .build();
-                scheduler.scheduleJob(job, trigger);
-                Thread.sleep(5000);
-                scheduler.shutdown();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Properties config = getProperties();
+        try (Connection connection = getConnectionWithProperties(config)) {
+            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+            scheduler.start();
+            JobDataMap data = new JobDataMap();
+            data.put("connection", connection);
+            JobDetail job = newJob(Rabbit.class)
+                    .usingJobData(data)
+                    .build();
+            SimpleScheduleBuilder times = simpleSchedule()
+                    .withIntervalInSeconds(Integer.parseInt(
+                            config.getProperty("rabbit.interval")))
+                    .repeatForever();
+            Trigger trigger = newTrigger()
+                    .startNow()
+                    .withSchedule(times)
+                    .build();
+            scheduler.scheduleJob(job, trigger);
+            Thread.sleep(5000);
+            scheduler.shutdown();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,11 +47,14 @@ public class AlertRabbit {
                 config.getProperty("username"),
                 config.getProperty("password"));
     }
-    private static Properties getProperties() throws IOException {
-    Properties config = new Properties();
+
+    private static Properties getProperties() {
+        Properties config = new Properties();
         try (InputStream is = AlertRabbit.class.getClassLoader().
                 getResourceAsStream("rabbit.properties")) {
             config.load(is);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
         return config;
     }
@@ -64,6 +63,7 @@ public class AlertRabbit {
         public Rabbit() {
             System.out.println(hashCode());
         }
+
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");

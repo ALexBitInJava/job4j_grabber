@@ -35,8 +35,22 @@ public class HabrCareerParse {
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
                 String dateTime = String.format(linkDateTime.attr("datetime"));
                 String[] dF = dateTime.split("T");
-                System.out.printf("%s %s %s%n", dF[0], vacancyName, link);
+
+                String description = "";
+                try {
+                    description = retrieveDescription(link);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.printf("%s %s %s %s %n", dF[0], vacancyName, link, description);
             });
         }
+    }
+
+    private static String retrieveDescription(String link) throws IOException {
+        Document document = Jsoup.connect(link).get();
+        Elements description = document.select(".style-ugc");
+
+        return description.text();
     }
 }

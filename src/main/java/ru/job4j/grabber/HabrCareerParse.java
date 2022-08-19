@@ -22,7 +22,8 @@ public class HabrCareerParse {
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
 
     public static void main(String[] args) throws IOException {
-        for (int page = 1; page < 3; page++) {
+        int count = 5;
+        for (int page = 1; page <= count; page++) {
             Connection connection = Jsoup.connect(PAGE_LINK + "?page=" + page);
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");

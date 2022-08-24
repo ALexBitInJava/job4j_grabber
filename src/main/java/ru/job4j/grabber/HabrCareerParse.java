@@ -57,7 +57,7 @@ public class HabrCareerParse implements Parse {
 
                 String vacancyLink = String.format("%s%s", SOURCE_LINK, titleElement.attr("href"));
                 String vacancyDescriprion = retrieveDescription(vacancyLink);
-                list.add(new Post(vacancyLink, vacancyName, vacancyDescriprion, dateTimeParser.parse(vacancyDate)));
+                list.add(new Post(vacancyName, vacancyLink, vacancyDescriprion, dateTimeParser.parse(vacancyDate)));
             });
         }
         return list;

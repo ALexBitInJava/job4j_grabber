@@ -5,3 +5,4 @@ text text,
 link varchar(255) unique,
 created timestamp
 );
+select * from post

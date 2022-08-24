@@ -21,7 +21,6 @@ public class Grabber implements Grab {
 
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer?page=", SOURCE_LINK);
-
     private final Properties cfg = new Properties();
 
     public Store store() {

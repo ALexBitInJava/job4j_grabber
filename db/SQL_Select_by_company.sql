@@ -47,6 +47,7 @@ insert into person (id, name, company_id) values (26, 'person26', 5);
 insert into person (id, name, company_id) values (27, 'person27', 5);
 insert into person (id, name, company_id) values (28, 'person28', 4);
 insert into person (id, name, company_id) values (29, 'person29', 3);
+insert into person (id, name, company_id) values (30, 'person30', 4);
 
 /*имена всех person, которые не состо€т в компании с id = 5;
 название компании дл€ каждого человека.*/
@@ -60,13 +61,9 @@ where company_id !=5;
 select company.name, count(person.company_id) as count from person join company
 on person.company_id=company.id
 group by company.id
-order by company.id desc;
-
-/* ≈сть результат запроса, полученный в виде таблицы.  ак мне обратитьс€ к этой
-временной таблице, чтобы получить максимум по ней?*/
-select table.name, max(table.count) from (select company.name, count(person.company_id) as count from person join company
-on person.company_id=company.id
-group by company.id
-order by company.id desc) as table;
-
+having count(*) = (
+select count(company_id) from person
+group by company_id
+order by company_id desc limit 1)
+order by company.id desc
 

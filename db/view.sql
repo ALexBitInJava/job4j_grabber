@@ -54,5 +54,7 @@ create view job_view5 as
          join books b on o.book_id = b.id
          join authors a on b.author_id = a.id
          where a.name = 'Николай Гоголь';
-drop view job_view5;
+
 select * from job_view5;
+
+drop view job_view5;

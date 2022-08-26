@@ -48,18 +48,10 @@ create view show_students_with_2_or_more_books
 
 select * from show_students_with_2_or_more_books;
 
-alter view show_students_with_2_or_more_books rename to new_name_view;
-alter view new_name_view rename student to new_name_view_column1;
-
-drop view new_name_view cascade;
-
-select authors.name, count(books.name) from authors join books
-on authors.id = books.author_id
-group by authors.name
-having count(books.name) > 2
-
-create view jov_view as
-select authors.name, count(books.name) from authors join books
-on authors.id = books.author_id
-group by authors.name
-having count(books.name) > 2;
+create view job_view as
+    select s.name as student, count(a.name), a.name as author from students as s
+         join orders o on s.id = o.student_id
+         join books b on o.book_id = b.id
+         join authors a on b.author_id = a.id
+         group by (s.name, a.name) having count(a.name) < 2;
+select * from job_view;

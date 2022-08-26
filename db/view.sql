@@ -48,11 +48,11 @@ create view show_students_with_2_or_more_books
 
 select * from show_students_with_2_or_more_books;
 
-create view job_view3 as
-    select a.name as author, s.name as student, count(a.name) from students as s
+create view job_view4 as
+    select a.name as author, s.name as student, b.name from students as s
          join orders o on s.id = o.student_id
          join books b on o.book_id = b.id
          join authors a on b.author_id = a.id
-         group by (a.name, s.name) having a.name = 'Николай Гоголь';
+         group by (a.name, s.name, b.name) having a.name = 'Николай Гоголь';
 drop view job_view3;
-select * from job_view3;
+select * from job_view4;

@@ -9,12 +9,13 @@ $$
 $$;
 
 create or replace function delete_function(u_id integer)
-returns void
+returns integer
 language 'plpgsql'
 as
 $$
 declare result integer;
     BEGIN
-    delete from products where price > 66;
+    delete from products where id = u_id;
+    select into results sum(price) from products;
     END;
 $$;

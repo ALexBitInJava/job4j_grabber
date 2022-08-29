@@ -24,8 +24,9 @@ create or replace function tax1()
 $$
     BEGIN
         update products
-        set price = price*1.2
-        return new;
+        set price = price * 1.13
+        where id = (select id from inserted);
+        return NEW;
     END;
 $$
 LANGUAGE 'plpgsql';
@@ -43,7 +44,7 @@ create or replace function tax2()
 $$
     BEGIN
         update products
-        set price = price*0.2
+        NEW.price = NEW.price * 1.13;
         return new;
     END;
 $$
@@ -51,7 +52,6 @@ LANGUAGE 'plpgsql';
 
 create trigger tax2_trigger
     before insert on products
-    referencing new table as inserted
     for each row
     execute procedure tax2();
 
@@ -68,12 +68,17 @@ create table history_of_price (
 create or replace function double_insert()
     returns trigger as
 $$
+    BEGIN
+    insert into history_of_price(name, price, date)
+    values(new.name, new.price, now());
+    return new;
+    END;
 $$
 LANGUAGE 'plpgsql';
 
 create trigger insert3_trigger
     alter insert on products
     for each row
-    insert into history_of_price(name, price, date)
-    values(new.name, new.price, new.date);
+    execute procedure history_of_price();
+
 

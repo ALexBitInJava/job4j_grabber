@@ -13,9 +13,21 @@ returns integer
 language 'plpgsql'
 as
 $$
-declare result results;
+declare result integer;
     BEGIN
     delete from products where id = u_id;
-    select into results sum(price) from products;
+    select into result sum(price) from products;
     END;
+$$;
+
+create or replace function delete_if(u_id integer)
+returns integer
+language 'plpgsql'
+as
+$$
+declare results integer;
+    begin
+delete from products where id < u_id;
+select into results count(price) from products;
+END;
 $$;

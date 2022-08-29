@@ -43,7 +43,6 @@ create or replace function tax2()
     returns trigger as
 $$
     BEGIN
-        update products
         NEW.price = NEW.price * 1.13;
         return new;
     END;
@@ -77,8 +76,8 @@ $$
 LANGUAGE 'plpgsql';
 
 create trigger insert3_trigger
-    alter insert on products
+    after insert on products
     for each row
-    execute procedure history_of_price();
+    execute procedure double_insert();
 
 

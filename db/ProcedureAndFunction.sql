@@ -13,7 +13,7 @@ returns integer
 language 'plpgsql'
 as
 $$
-declare result integer;
+declare result results;
     BEGIN
     delete from products where id = u_id;
     select into results sum(price) from products;

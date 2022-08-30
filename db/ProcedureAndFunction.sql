@@ -17,6 +17,7 @@ declare result integer;
     BEGIN
     delete from products where id = u_id;
     select into result sum(price) from products;
+    return result;
     END;
 $$;
 
@@ -27,7 +28,8 @@ as
 $$
 declare results integer;
     begin
+select into results count(*) from products where id < u_id;
 delete from products where id < u_id;
-select into results count(price) from products;
+return results;
 END;
 $$;

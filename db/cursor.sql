@@ -17,5 +17,10 @@ move forward 5 from cursor_name;
 fetch forward 2 from cursor_name;
 --Прочитать 16 и 15 строки
 fetch backward 2 from cursor_name;
+fetch backward 2 from cursor_name;
+fetch backward 2 from cursor_name;
+fetch backward 2 from cursor_name;
+fetch backward 2 from cursor_name;
+fetch first from cursor_name;
 close cursor_name;
 commit;

@@ -1,15 +1,13 @@
 package ru.job4j.tdd;
 
 import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Calendar;
 import java.util.List;
 
-@Disabled
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class CinemaTest {
 
     @Ignore
@@ -33,7 +31,7 @@ public class CinemaTest {
     }
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test//(expected = IllegalArgumentException.class)
     public void whenInvalidPlace() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -43,7 +41,7 @@ public class CinemaTest {
     }
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test//(expected = IllegalArgumentException.class)
     public void whenInvalidDate() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -53,7 +51,7 @@ public class CinemaTest {
     }
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test//(expected = IllegalArgumentException.class)
     public void whenThePlaceIsOccupied() {
         Account account1 = new AccountCinema();
         Account account2 = new AccountCinema();

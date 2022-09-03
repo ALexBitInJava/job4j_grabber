@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class GeneratorTemplateTest {
 
     @Ignore
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void produce() {
         GeneratorTemplate generator = new GeneratorTemplate();
         Map<String, String> map = new HashMap<>();
